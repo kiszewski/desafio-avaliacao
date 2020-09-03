@@ -1,0 +1,4 @@
+name: desafio_avaliativo
+
+dev_dependencies:
+  test: ^1.15.3
