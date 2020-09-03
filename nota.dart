@@ -74,10 +74,19 @@ class Nota {
     }
 
     if ((this._media != null) && (this._notaProva1 != null)) {
-      return this._media * 2 - this._notaProva1;
+      double notaProva2 = this._media * 2 - this._notaProva1;
+
+      return notaProva2 > 10
+          ? throw NotaInvalidaException('Média incopampatível com a nota passada.')
+          : notaProva2;
     }
+
     if ((this._media != null) && (this._notaProva2 != null)) {
-      return this._media * 2 - this._notaProva2;
+      double notaProva1 = this._media * 2 - this._notaProva2;
+
+      return notaProva1 > 10
+          ? throw NotaInvalidaException('Média incopampatível com a nota passada.')
+          : notaProva1;
     }
   }
 }

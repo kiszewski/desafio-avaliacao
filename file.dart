@@ -22,10 +22,5 @@ import 'nota.dart';
 //   }
 // }
  main() {
-   try {
-    Nota nota = Nota(media: -2);
-    print(nota.estaAprovado);
-   }catch(e) {
-     print(e);
-   }
+
  }

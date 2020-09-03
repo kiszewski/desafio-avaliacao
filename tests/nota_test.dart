@@ -10,6 +10,11 @@ main() {
     expect(nota.mediaAmericana, 'C');
   });
 
+  test('Obter nota que não foi passada', () {
+      Nota nota = Nota(nota2: 3, media: 6);
+      expect(nota.notaFaltante, 9);
+  });
+
   test('Obter média somente com uma nota error', () {
     try {
       Nota nota = Nota(nota2: 3);
@@ -19,9 +24,13 @@ main() {
     }
   });
 
-  test('Obter nota que não foi passada', () {
-      Nota nota = Nota(nota2: 3, media: 6);
-      expect(nota.notaFaltante, 9);
+  test('Obter nota faltante error', () {
+    try {
+      Nota nota = Nota(nota2: 0.5, media: 9.5);
+      nota.notaFaltante;
+    } catch (e) {
+      expect(e, isA<NotaInvalidaException>());
+    }
   });
 
   test('Instanciar nota error', () {
