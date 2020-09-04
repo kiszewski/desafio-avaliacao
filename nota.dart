@@ -4,12 +4,12 @@ class Nota {
   double _notaProva1;
   double _notaProva2;
   double _media;
-  static const Map<String, double> _notasAmericanasValidas = {
-    'A': 9.5,
-    'B': 8.0,
-    'C': 6.0,
-    'D': 4.0,
-    'F': 1.0,
+  static const Map<String, List<double>> _notasAmericanasValidas = {
+    'A': [9, 10],
+    'B': [7, 8.9],
+    'C': [5, 6.9],
+    'D': [3, 4.9],
+    'F': [0, 2.9],
   };
 
   Nota({double nota1, double nota2, double media}) {
@@ -31,22 +31,25 @@ class Nota {
   }
 
   Nota.notaEUA({String nota1, String nota2, String media}) {
+    //Esse metódo pega a nota mais alta. Ex:
+    //Se o aluno tirou A, a nota brasileira dele vai ser 10
+
     if (validarNotaEUA(nota1)) {
       String notaSelecionada =
           letrasAmericanas.firstWhere((key) => key == nota1);
-      this._notaProva1 = Nota._notasAmericanasValidas[notaSelecionada];
+      this._notaProva1 = Nota._notasAmericanasValidas[notaSelecionada][1];
     }
 
     if (validarNotaEUA(nota2)) {
       String notaSelecionada =
           letrasAmericanas.firstWhere((key) => key == nota2);
-      this._notaProva2 = Nota._notasAmericanasValidas[notaSelecionada];
+      this._notaProva2 = Nota._notasAmericanasValidas[notaSelecionada][1];
     }
 
     if (validarNotaEUA(media)) {
       String notaSelecionada =
           letrasAmericanas.firstWhere((key) => key == media);
-      this._media = Nota._notasAmericanasValidas[notaSelecionada];
+      this._media = Nota._notasAmericanasValidas[notaSelecionada][1];
     }
 
     if ((this._notaProva1 != null) && (this._notaProva2 != null)) {
@@ -142,4 +145,19 @@ class Nota {
 
   List<String> get letrasAmericanas =>
       Nota._notasAmericanasValidas.keys.toList();
+
+  double notaNecessaria(String notaDesejada) {
+    if (validarNotaEUA(notaDesejada)) {
+      final double mediaDesejada = Nota._notasAmericanasValidas[notaDesejada][0];
+      if (this._notaProva1 != null) {
+        return (mediaDesejada * 2) - this._notaProva1;
+      } else if (this._notaProva2 != null) {
+        return (mediaDesejada * 2) - this._notaProva2;
+      } else {
+        throw NotaInvalidaException('Sem nota para calcular nota necessária.');
+      }
+    } else {
+      throw NotaInvalidaException('Nota inválida.');
+    }
+  }
 }
