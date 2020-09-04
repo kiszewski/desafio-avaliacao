@@ -15,6 +15,19 @@ main() {
       expect(nota.notaFaltante, 9);
   });
 
+  test('Validar nota Americana', () {
+    Nota nota = Nota.notaEUA(nota1: 'A', nota2: 'C');
+    print(nota.mediaBrasileira);
+    expect(nota.estaAprovado, true);
+    expect(nota.mediaAmericana, 'B');
+
+    Nota nota2 = Nota.notaEUA(nota1: 'D', nota2: 'D');
+    expect(nota2.estaAprovado, false);
+
+    Nota nota3 = Nota.notaEUA(nota1: 'F', nota2: 'F');
+    expect(nota3.estaAprovado, false);
+  });
+
   test('Obter média somente com uma nota error', () {
     try {
       Nota nota = Nota(nota2: 3);

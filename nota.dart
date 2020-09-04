@@ -4,6 +4,13 @@ class Nota {
   double _notaProva1;
   double _notaProva2;
   double _media;
+  List<Map<String, double>> _notasAmericanasValidas = [
+    {'A': 9.5},
+    {'B': 8.0},
+    {'C': 6.0},
+    {'D': 4.0},
+    {'F': 1.0},
+  ];
 
   Nota({double nota1, double nota2, double media}) {
     if (validarNota(nota1)) {
@@ -23,7 +30,31 @@ class Nota {
     }
   }
 
-  bool validarNota(nota) {
+  Nota.notaEUA({String nota1, String nota2, String media}) {
+    if (validarNotaEUA(nota1)) {
+      Map<String, double> notaSelecionada = _notasAmericanasValidas
+          .firstWhere((element) => element.keys.toList()[0] == nota1);
+      this._notaProva1 = notaSelecionada[nota1];
+    }
+
+    if (validarNotaEUA(nota2)) {
+      Map<String, double> notaSelecionada = _notasAmericanasValidas
+          .firstWhere((element) => element.keys.toList()[0] == nota2);
+      this._notaProva2 = notaSelecionada[nota2];
+    }
+
+    if (validarNotaEUA(media)) {
+      Map<String, double> notaSelecionada = _notasAmericanasValidas
+          .firstWhere((element) => element.keys == media);
+      this._media = notaSelecionada[media];
+    }
+
+    if ((this._notaProva1 != null) && (this._notaProva2 != null)) {
+      this._media = (this._notaProva1 + this._notaProva2) / 2;
+    }
+  }
+
+  bool validarNota(double nota) {
     if (nota != null) {
       if (nota > 10) {
         throw NotaInvalidaException('Nota acima do limite.');
@@ -31,6 +62,25 @@ class Nota {
         throw NotaInvalidaException('Nota abaixo do limite.');
       }
       return true;
+    }
+    return false;
+  }
+
+  bool validarNotaEUA(String nota) {
+    if (nota != null) {
+      if (nota.length > 1) {
+        throw NotaInvalidaException(
+            'Nota americana inválida, permitido somente uma letra.');
+      }
+
+      if (!this._notasAmericanasValidas.any((element) {
+        String firstKey = element.keys.toList()[0];
+        return nota == firstKey;
+      })) {
+        throw NotaInvalidaException(
+            'Nota americana inválida, letras permitidas: A, B, C, D e F.');
+      } else
+        return true;
     }
     return false;
   }
@@ -77,7 +127,8 @@ class Nota {
       double notaProva2 = this._media * 2 - this._notaProva1;
 
       return notaProva2 > 10
-          ? throw NotaInvalidaException('Média incopampatível com a nota passada.')
+          ? throw NotaInvalidaException(
+              'Média incopampatível com a nota passada.')
           : notaProva2;
     }
 
@@ -85,7 +136,8 @@ class Nota {
       double notaProva1 = this._media * 2 - this._notaProva2;
 
       return notaProva1 > 10
-          ? throw NotaInvalidaException('Média incopampatível com a nota passada.')
+          ? throw NotaInvalidaException(
+              'Média incopampatível com a nota passada.')
           : notaProva1;
     }
   }
