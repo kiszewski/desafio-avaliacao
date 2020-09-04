@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
-import '../disciplina.dart';
-import '../nota.dart';
-import '../gradeCurricular.dart';
+import '../models/disciplina.dart';
+import '../models/nota.dart';
+import '../models/gradeCurricular.dart';
 
 main(List<String> args) {
   Disciplina engSoftware = Disciplina('Engenharia de Software', 3);

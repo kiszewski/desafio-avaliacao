@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
-import '../disciplina.dart';
-import '../nota.dart';
+import '../models/disciplina.dart';
+import '../models/nota.dart';
 
 main(List<String> args) {
   group('Testes na classe Disciplina', () {

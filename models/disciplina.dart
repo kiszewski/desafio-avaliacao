@@ -1,5 +1,5 @@
 import 'nota.dart';
-import './errors/disciplinaException.dart';
+import '../errors/disciplinaException.dart';
 
 class Disciplina {
   String _nome;

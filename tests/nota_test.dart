@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import '../nota.dart';
+import '../models/nota.dart';
 import '../errors/notaInvalidaException.dart';
 
 main() {

@@ -1,4 +1,4 @@
-import 'errors/notaInvalidaException.dart';
+import '../errors/notaInvalidaException.dart';
 
 class Nota {
   double _notaProva1;
