@@ -4,13 +4,13 @@ class Nota {
   double _notaProva1;
   double _notaProva2;
   double _media;
-  List<Map<String, double>> _notasAmericanasValidas = [
-    {'A': 9.5},
-    {'B': 8.0},
-    {'C': 6.0},
-    {'D': 4.0},
-    {'F': 1.0},
-  ];
+  static const Map<String, double> _notasAmericanasValidas = {
+    'A': 9.5,
+    'B': 8.0,
+    'C': 6.0,
+    'D': 4.0,
+    'F': 1.0,
+  };
 
   Nota({double nota1, double nota2, double media}) {
     if (validarNota(nota1)) {
@@ -32,21 +32,21 @@ class Nota {
 
   Nota.notaEUA({String nota1, String nota2, String media}) {
     if (validarNotaEUA(nota1)) {
-      Map<String, double> notaSelecionada = _notasAmericanasValidas
-          .firstWhere((element) => element.keys.toList()[0] == nota1);
-      this._notaProva1 = notaSelecionada[nota1];
+      String notaSelecionada =
+          letrasAmericanas.firstWhere((key) => key == nota1);
+      this._notaProva1 = Nota._notasAmericanasValidas[notaSelecionada];
     }
 
     if (validarNotaEUA(nota2)) {
-      Map<String, double> notaSelecionada = _notasAmericanasValidas
-          .firstWhere((element) => element.keys.toList()[0] == nota2);
-      this._notaProva2 = notaSelecionada[nota2];
+      String notaSelecionada =
+          letrasAmericanas.firstWhere((key) => key == nota2);
+      this._notaProva2 = Nota._notasAmericanasValidas[notaSelecionada];
     }
 
     if (validarNotaEUA(media)) {
-      Map<String, double> notaSelecionada = _notasAmericanasValidas
-          .firstWhere((element) => element.keys.toList()[0] == media);
-      this._media = notaSelecionada[media];
+      String notaSelecionada =
+          letrasAmericanas.firstWhere((key) => key == media);
+      this._media = Nota._notasAmericanasValidas[notaSelecionada];
     }
 
     if ((this._notaProva1 != null) && (this._notaProva2 != null)) {
@@ -73,14 +73,12 @@ class Nota {
             'Nota americana inválida, permitido somente uma letra.');
       }
 
-      if (!this._notasAmericanasValidas.any((element) {
-        String firstKey = element.keys.toList()[0];
-        return nota == firstKey;
-      })) {
+      if (letrasAmericanas.any((letra) => nota == letra)) {
+        return true;
+      } else {
         throw NotaInvalidaException(
             'Nota americana inválida, letras permitidas: A, B, C, D e F.');
-      } else
-        return true;
+      }
     }
     return false;
   }
@@ -141,4 +139,7 @@ class Nota {
           : notaProva1;
     }
   }
+
+  List<String> get letrasAmericanas =>
+      Nota._notasAmericanasValidas.keys.toList();
 }
