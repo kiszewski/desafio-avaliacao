@@ -3,23 +3,25 @@ import 'models/gradeCurricular.dart';
 import 'models/nota.dart';
 
 class ProcessarArquivo {
-    final GradeCurricular gr = GradeCurricular([
-      Disciplina('Logica Matematica', 4),
-      Disciplina('Engenharia de Software', 6),
-      Disciplina('Teoria da computacao', 3),
-      Disciplina('Banco de Dados', 6),
-      Disciplina('Arquitetura de Software', 4),
-    ]);
-    List<String> respostas = [];
+  final GradeCurricular gr = GradeCurricular([
+    Disciplina('Logica Matematica', 4),
+    Disciplina('Engenharia de Software', 6),
+    Disciplina('Teoria da computacao', 3),
+    Disciplina('Banco de Dados', 6),
+    Disciplina('Arquitetura de Software', 4),
+  ]);
+  List<String> respostas = [];
 
-    ProcessarArquivo(List<String> txt) {
-      //Separar o que é pergunta e o que é frases
-      List<String> frases = txt.where((element) => !element.endsWith('?')).toList();
-      List<String> perguntas = txt.where((element) => element.endsWith('?')).toList();
+  ProcessarArquivo(List<String> txt) {
+    //Separar o que é pergunta e o que é frases
+    List<String> frases =
+        txt.where((element) => !element.endsWith('?')).toList();
+    List<String> perguntas =
+        txt.where((element) => element.endsWith('?')).toList();
 
-      processarNotas(frases);
-      processarPerguntas(perguntas);
-    }
+    processarNotas(frases);
+    processarPerguntas(perguntas);
+  }
 
   processarNotas(List<String> frases) {
     //Palavras Chaves ou PC:
@@ -67,7 +69,6 @@ class ProcessarArquivo {
   }
 
   List<String> processarPerguntas(List<String> perguntas) {
-
     //Palavras Chaves ou PC:
     const String PC_MEDIA = 'media';
     const String PC_PROVA1 = 'prova1';
@@ -85,9 +86,23 @@ class ProcessarArquivo {
         for (var disciplina in this.gr.disciplinas) {
           if (pergunta.endsWith('${disciplina.nome}?')) {
             //Qual a media dessa disciplina:
-            this.respostas.add(disciplina.mediaDisciplina.toStringAsFixed(1));
+            String resp;
+
+            try {
+              double media = disciplina.mediaDisciplina;
+              resp =
+                  'A media em ${disciplina.nome} foi de ${media.toStringAsFixed(1)}';
+            } catch (e) {
+              resp = e.toString();
+            }
+
+            this.respostas.add(resp);
           }
         }
+      }
+
+      if (pergunta.contains(PC_APROVADO)) {
+        for (var disciplina in this.gr.disciplinas) {}
       }
     }
   }

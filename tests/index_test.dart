@@ -40,7 +40,7 @@ main() {
     expect(resposta.gr.qtdCreditosConcluidos, 16);
   });
 
-  test('Respondendo perguntas', () {
+  test('Respondendo media', () {
       final List<String> texto = [
     'Logica Matematica media C',
     'Engenharia de Software prova1 A',
@@ -48,10 +48,14 @@ main() {
     'Banco de Dados media B',
     'Teoria da computacao prova1 F',
     'Teoria da computacao prova2 D',
-    'qual a media em pontuacao brasileira em Teoria da computacao?'
+    'qual a media em pontuacao brasileira em Teoria da computacao?',
+    'qual a media em pontuacao brasileira em Arquitetura de Software?',
+    'qual a media em pontuacao brasileira em Engenharia de Software?'
   ];
 
     ProcessarArquivo resposta = ProcessarArquivo(texto);
-    expect(resposta.respostas[0], '3.9');
+    expect(resposta.respostas[0], 'A media em Teoria da computacao foi de 3.9');
+    expect(resposta.respostas[1], 'Sem nota para avaliar.');
+    expect(resposta.respostas[2], 'A media em Engenharia de Software foi de 9.4');
   });
 }
