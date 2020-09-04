@@ -45,7 +45,7 @@ class Nota {
 
     if (validarNotaEUA(media)) {
       Map<String, double> notaSelecionada = _notasAmericanasValidas
-          .firstWhere((element) => element.keys == media);
+          .firstWhere((element) => element.keys.toList()[0] == media);
       this._media = notaSelecionada[media];
     }
 
