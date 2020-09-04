@@ -40,7 +40,6 @@ class ProcessarArquivo {
             if (disciplina.temNota) {
               Nota notaExistente = disciplina.obterNota;
               notaExistente.inserirMedia(notaLetra);
-              disciplina.definirNota(notaExistente);
             } else {
               disciplina.definirNota(Nota.notaEUA(media: notaLetra));
             }
@@ -49,7 +48,6 @@ class ProcessarArquivo {
             if (disciplina.temNota) {
               Nota notaExistente = disciplina.obterNota;
               notaExistente.inserirNota1(notaLetra);
-              disciplina.definirNota(notaExistente);
             } else {
               disciplina.definirNota(Nota.notaEUA(nota1: notaLetra));
             }
@@ -58,7 +56,6 @@ class ProcessarArquivo {
             if (disciplina.temNota) {
               Nota notaExistente = disciplina.obterNota;
               notaExistente.inserirNota2(notaLetra);
-              disciplina.definirNota(notaExistente);
             } else {
               disciplina.definirNota(Nota.notaEUA(nota2: notaLetra));
             }
@@ -68,7 +65,7 @@ class ProcessarArquivo {
     }
   }
 
-  List<String> processarPerguntas(List<String> perguntas) {
+  processarPerguntas(List<String> perguntas) {
     //Palavras Chaves ou PC:
     const String PC_MEDIA = 'media';
     const String PC_PROVA1 = 'prova1';
@@ -107,9 +104,9 @@ class ProcessarArquivo {
         // Esse metodo considera somente as disciplinas com notas
         // Se o aluno for reprovado em mais de uma prova só sera exibido uma das notas que ele rodou
 
-        String resp = gr.aprovadoEmTodas ?
-          'Sim, fui aprovado em todas disciplinas' :
-          'Não, reprovei em ${gr.disciplinasReprovadas[0].nome}';
+        String resp = gr.aprovadoEmTodas
+            ? 'Sim, fui aprovado em todas disciplinas'
+            : 'Não, reprovei em ${gr.disciplinasReprovadas[0].nome}';
 
         this.respostas.add(resp);
       }

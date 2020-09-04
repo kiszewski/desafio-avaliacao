@@ -1,0 +1,40 @@
+-Inicio:
+    O desafio inicia na leitura do arquivo txt com as linhas de instruções e perguntas;
+
+-Processando as entradas e gerando a saída:
+    A classe ProcessarArquivo é responsável por processar esse arquivo, separando o que é instrução 
+de pergunta pelo ultimo caractere que é um '?'.
+    Nela há uma gradeCurricular que é onde fica toda a regra de negócio (será explicada mais a frente).
+    A classe ProcessarArquivo primeiro processa as instruções que estão no arquivo txt atraves do metodo processarNotas, 
+preenchendo as notas passados na gradeCurricular nas respectivas disciplinas.
+    O metodo processarPerguntas identifica qual o tipo de pergunta é atraves das palavras chaves (constantes iniciadas com PC_),
+dessa forma ele consegue identificar qual metodo sera capaz de responder determinada pergunta, esse metodo tem a responsabilidade 
+de montar a frase inteira da resposta.
+    Depois da execução desses dois metodos é gerado uma lista de resultados.
+
+-Regra de negócio:
+    A GradeCurricular possui uma lista de disciplinas e getters para responder algumas perguntas, como:
+    - quantidade total de creditos de todas as disciplinas incluindo as sem notas;
+    - quantidade de creditos concluídos, levando em conta somente as disciplinas onde o aluno foi aprovado;
+    - se foi aprovado em todas as disciplinas em que possui notas.
+
+    A Disciplina possui um nome e quantidade de creditos, sendo obrigatorios na sua instanciação,
+já a nota é inserida posteriormente quando for lido as instruções do arquivo.txt.
+    Essa classe possui somente dois getters que tem total dependencia da Nota:
+    - Obter a média brasileira na disciplina;
+    - Checar se o aluno está aprovado na disciplina;
+
+    A Nota é a classe que possui a maior parte da lógica da aplicação. 
+    Para Instanciar uma nota não é necessário passar nenhum parametro, pois em alguns casos pode ser que 
+tenha somente uma das notas, ou só a media.
+    Porém ao utilizar os metodos pode ser que seja gerado algum erro personalizado, exemplo:
+    - uma nota com somente uma prova realizada não é capaz de gerar uma média, caso em algum momento
+    seja forçado a resposta dessa media, será gerado um erro com a mensagem adequada.
+    Na classe Nota há dois construtores, porem em toda a aplicação foi usado o construtor nomeado Nota.notaEUA(),
+esse construtor verifica se é uma nota valida e sempre atribui a nota mais alta possivel, exemplo:
+    - se o aluno tirou nota 'A' a nota brasileira dele vai ser 10. 
+
+
+
+
+-Erros

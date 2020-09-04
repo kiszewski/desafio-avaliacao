@@ -28,6 +28,8 @@ main(List<String> args) {
     });
 
     test('Quantidade de creditos em disciplinas aprovadas', () {
+      grade.disciplinas.add(Disciplina('Arquitetura de Software', 5));
+      //Adicionado uma disciplina que não possui nota, ela não deve ser levada em consideração nesse calculo
       expect(grade.qtdCreditosConcluidos, 7);
     });
   });

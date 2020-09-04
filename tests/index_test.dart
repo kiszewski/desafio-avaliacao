@@ -1,6 +1,4 @@
 import 'package:test/test.dart';
-import '../models/gradeCurricular.dart';
-import '../models/nota.dart';
 import '../index.dart';
 
 main() {
