@@ -6,18 +6,21 @@ class GradeCurricular {
 
   GradeCurricular(this._disciplinas);
 
-  bool get aprovadoEmTodas =>
-    _disciplinas.every((disciplina) => disciplina.estaAprovado);
+  bool get aprovadoEmTodas {
+    return disciplinasComNotas.every((disciplina) => disciplina.estaAprovado);
+  }
   
   int get qtdTotalCreditos =>
     _disciplinas.fold(0, (previousValue, element) => previousValue + element.qtdCreditos);
 
   int get qtdCreditosConcluidos {
-    List<Disciplina> disciplinasAprovadas = _disciplinas.where((disciplina) => disciplina.estaAprovado == true).toList();
+    List<Disciplina> disciplinasAprovadas = disciplinasComNotas.where((disciplina) => disciplina.estaAprovado == true).toList();
 
     return disciplinasAprovadas
       .fold(0, (previousValue, element) => previousValue + element.qtdCreditos);
   }
+
+  List<Disciplina> get disciplinasComNotas => _disciplinas.where((disciplina) => disciplina.temNota).toList();
 
   List<String> get nomesDisciplinas {
     return this._disciplinas.map((disciplina) {

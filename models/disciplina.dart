@@ -10,6 +10,18 @@ class Disciplina {
 
   String get nome => _nome;
 
+  bool get temNota {
+    if(this._nota == null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  Nota get obterNota {
+    return this._nota;
+  }
+
   definirNota(Nota nota) {
     this._nota = nota;
   }

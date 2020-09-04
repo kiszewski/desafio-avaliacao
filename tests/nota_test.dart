@@ -32,6 +32,10 @@ main() {
       Nota nota4 = Nota.notaEUA(media: 'C');
       expect(nota4.estaAprovado, true);
       expect(nota4.mediaAmericana, 'C');
+
+      Nota nota5 = Nota.notaEUA(nota1: 'B', nota2: 'B');
+      expect(nota5.estaAprovado, true);
+      expect(nota5.mediaAmericana, 'B');
     });
 
     test('Obter nota desejada', () {

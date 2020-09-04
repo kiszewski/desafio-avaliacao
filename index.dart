@@ -2,7 +2,7 @@ import 'models/disciplina.dart';
 import 'models/gradeCurricular.dart';
 import 'models/nota.dart';
 
-void main() {
+GradeCurricular processarNotas(List<String> frases) {
   //Palavras Chaves ou PC:
   const String PC_MEDIA = 'media';
   const String PC_PROVA1 = 'prova1';
@@ -11,47 +11,48 @@ void main() {
   final GradeCurricular gr = GradeCurricular([
     Disciplina('Logica Matematica', 4),
     Disciplina('Engenharia de Software', 6),
+    Disciplina('Teoria da computacao', 3),
+    Disciplina('Banco de Dados', 6),
+    Disciplina('Arquitetura de Software', 4),
   ]);
 
-  final List<String> frases = [
-    'Logica Matematica media B',
-    'Engenharia de Software media A',
-  ];
-
   for (var frase in frases) {
-    for (var disciplina in gr.disciplinas) {
-      if (frase.startsWith(disciplina.nome)) {
-        if (frase.contains(PC_MEDIA)) {
-          String notaLetra = frase[frase.length - 1];
+    frase = frase.toLowerCase();
 
-          disciplina.definirNota(Nota.notaEUA(media: notaLetra));
+    for (var disciplina in gr.disciplinas) {
+      if (frase.startsWith(disciplina.nome.toLowerCase())) {
+        String notaLetra = frase[frase.length - 1].toUpperCase();
+
+        if (frase.contains(PC_MEDIA)) {
+          if (disciplina.temNota) {
+            Nota notaExistente = disciplina.obterNota;
+            notaExistente.inserirMedia(notaLetra);
+            disciplina.definirNota(notaExistente);
+          } else {
+            disciplina.definirNota(Nota.notaEUA(media: notaLetra));
+          }
         }
         if (frase.contains(PC_PROVA1)) {
-          String notaLetra = frase[frase.length - 1];
-
-          disciplina.definirNota(Nota.notaEUA(nota1: notaLetra));
+          if (disciplina.temNota) {
+            Nota notaExistente = disciplina.obterNota;
+            notaExistente.inserirNota1(notaLetra);
+            disciplina.definirNota(notaExistente);
+          } else {
+            disciplina.definirNota(Nota.notaEUA(nota1: notaLetra));
+          }
         }
         if (frase.contains(PC_PROVA2)) {
-          String notaLetra = frase[frase.length - 1];
-
-          disciplina.definirNota(Nota.notaEUA(nota2: notaLetra));
+          if (disciplina.temNota) {
+            Nota notaExistente = disciplina.obterNota;
+            notaExistente.inserirNota2(notaLetra);
+            disciplina.definirNota(notaExistente);
+          } else {
+            disciplina.definirNota(Nota.notaEUA(nota2: notaLetra));
+          }
         }
       }
     }
   }
 
-print(gr.aprovadoEmTodas);
-
-
-
-
-
-
-
-
-
+  return gr;
 }
-
-// final List<String> perguntas = [
-//   'Qual a media em Teoria da computacao?',
-// ];
