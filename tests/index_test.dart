@@ -38,6 +38,32 @@ main() {
       expect(resposta.gr.aprovadoEmTodas, false);
       expect(resposta.gr.qtdCreditosConcluidos, 16);
     });
+
+    test('Inserindo media invalida', () {
+      final List<String> frases = [
+        'Logica Matematica media Z',
+        'Banco de Dados media B',
+        'Teoria da computacao prova1 F',
+        'Teoria da computacao prova2 D',
+      ];
+
+      ProcessarArquivo resposta = ProcessarArquivo(frases);
+
+      expect(resposta.respostas[0], 'Nota americana inválida, letras permitidas: A, B, C, D e F.');
+    });
+
+    test('Inserindo prova1 invalida', () {
+      final List<String> frases = [
+        'Logica Matematica prova1 h',
+        'Banco de Dados media B',
+        'Teoria da computacao prova1 F',
+        'Teoria da computacao prova2 D',
+      ];
+
+      ProcessarArquivo resposta = ProcessarArquivo(frases);
+
+      expect(resposta.respostas[0], 'Nota americana inválida, letras permitidas: A, B, C, D e F.');
+    });
   });
 
   group('Respostas', () {

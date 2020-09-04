@@ -32,9 +32,9 @@ tenha somente uma das notas, ou só a media.
     seja forçado a resposta dessa media, será gerado um erro com a mensagem adequada.
     Na classe Nota há dois construtores, porem em toda a aplicação foi usado o construtor nomeado Nota.notaEUA(),
 esse construtor verifica se é uma nota valida e sempre atribui a nota mais alta possivel, exemplo:
-    - se o aluno tirou nota 'A' a nota brasileira dele vai ser 10. 
-
-
-
-
--Erros
+    - se o aluno tirou nota 'A' a nota brasileira dele vai ser 10.
+    Existem mais alguns metodos como obter a media brasileira ou americana, mas o metodo com maior lógica é o 
+responsavel por responder qual a nota que esta faltando pro aluno por exemplo:
+    -se o aluno tirou 2 na prova1 e a media dele for 9, 
+    é impossivel o aluno ter essa nota, porque pra ele ter essa media seria necessario uma prova com a nota maior que 10,
+    existindo uma inconsistencia nos dados e gerando um erro na aplicação.

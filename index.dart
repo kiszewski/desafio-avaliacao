@@ -33,33 +33,37 @@ class ProcessarArquivo {
       frase = frase.toLowerCase();
 
       for (var disciplina in this.gr.disciplinas) {
-        if (frase.startsWith(disciplina.nome.toLowerCase())) {
-          String notaLetra = frase[frase.length - 1].toUpperCase();
+        try {
+          if (frase.startsWith(disciplina.nome.toLowerCase())) {
+            String notaLetra = frase[frase.length - 1].toUpperCase();
 
-          if (frase.contains(PC_MEDIA)) {
-            if (disciplina.temNota) {
-              Nota notaExistente = disciplina.obterNota;
-              notaExistente.inserirMedia(notaLetra);
-            } else {
-              disciplina.definirNota(Nota.notaEUA(media: notaLetra));
+            if (frase.contains(PC_MEDIA)) {
+              if (disciplina.temNota) {
+                Nota notaExistente = disciplina.obterNota;
+                notaExistente.inserirMedia(notaLetra);
+              } else {
+                disciplina.definirNota(Nota.notaEUA(media: notaLetra));
+              }
+            }
+            if (frase.contains(PC_PROVA1)) {
+              if (disciplina.temNota) {
+                Nota notaExistente = disciplina.obterNota;
+                notaExistente.inserirNota1(notaLetra);
+              } else {
+                disciplina.definirNota(Nota.notaEUA(nota1: notaLetra));
+              }
+            }
+            if (frase.contains(PC_PROVA2)) {
+              if (disciplina.temNota) {
+                Nota notaExistente = disciplina.obterNota;
+                notaExistente.inserirNota2(notaLetra);
+              } else {
+                disciplina.definirNota(Nota.notaEUA(nota2: notaLetra));
+              }
             }
           }
-          if (frase.contains(PC_PROVA1)) {
-            if (disciplina.temNota) {
-              Nota notaExistente = disciplina.obterNota;
-              notaExistente.inserirNota1(notaLetra);
-            } else {
-              disciplina.definirNota(Nota.notaEUA(nota1: notaLetra));
-            }
-          }
-          if (frase.contains(PC_PROVA2)) {
-            if (disciplina.temNota) {
-              Nota notaExistente = disciplina.obterNota;
-              notaExistente.inserirNota2(notaLetra);
-            } else {
-              disciplina.definirNota(Nota.notaEUA(nota2: notaLetra));
-            }
-          }
+        } catch (e) {
+          this.respostas.add(e.toString());
         }
       }
     }
