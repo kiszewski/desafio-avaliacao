@@ -101,8 +101,17 @@ class ProcessarArquivo {
         }
       }
 
-      if (pergunta.contains(PC_APROVADO)) {
-        for (var disciplina in this.gr.disciplinas) {}
+      if (pergunta.contains(PC_APROVADO) &&
+          pergunta.contains(PC_TODAS_DISCIPLINAS)) {
+        // Se o aluno foi aprovado em todas as disciplinas
+        // Esse metodo considera somente as disciplinas com notas
+        // Se o aluno for reprovado em mais de uma prova só sera exibido uma das notas que ele rodou
+
+        String resp = gr.aprovadoEmTodas ?
+          'Sim, fui aprovado em todas disciplinas' :
+          'Não, reprovei em ${gr.disciplinasReprovadas[0].nome}';
+
+        this.respostas.add(resp);
       }
     }
   }
