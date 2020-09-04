@@ -31,10 +31,10 @@ class Nota {
   }
 
   Nota.notaEUA({String nota1, String nota2, String media}) {
-    definirNota(nota1: nota1, nota2: nota2, media: media);
+    definirNotaEUA(nota1: nota1, nota2: nota2, media: media);
   }
 
-  definirNota({String nota1, String nota2, String media}) {
+  definirNotaEUA({String nota1, String nota2, String media}) {
     //Esse metódo pega a nota mais alta. Ex:
     //Se o aluno tirou A, a nota brasileira dele vai ser 10
 
@@ -165,15 +165,7 @@ class Nota {
     }
   }
 
-  inserirNota1(String nota) {
-    definirNota(nota1: nota);
-  } 
-
-  inserirNota2(String nota) {
-    definirNota(nota2: nota);
-  } 
-
-  inserirMedia(String nota) {
-    definirNota(media: nota);
-  } 
+  inserirNota1(String nota) => definirNotaEUA(nota1: nota);
+  inserirNota2(String nota) => definirNotaEUA(nota2: nota);
+  inserirMedia(String nota) => definirNotaEUA(media: nota);
 }

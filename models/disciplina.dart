@@ -9,24 +9,11 @@ class Disciplina {
   Disciplina(this._nome, this._qtdCreditos);
 
   String get nome => _nome;
-
-  bool get temNota {
-    if(this._nota == null) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  Nota get obterNota {
-    return this._nota;
-  }
-
-  definirNota(Nota nota) {
-    this._nota = nota;
-  }
-
   int get qtdCreditos => this._qtdCreditos;
+  Nota get obterNota => this._nota;
+  bool get temNota => this._nota == null ? false : true;
+
+  definirNota(Nota nota) => this._nota = nota;
 
   bool get estaAprovado {
     if (this._nota == null) {

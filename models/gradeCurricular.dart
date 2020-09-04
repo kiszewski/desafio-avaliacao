@@ -22,11 +22,5 @@ class GradeCurricular {
 
   List<Disciplina> get disciplinasComNotas => _disciplinas.where((disciplina) => disciplina.temNota).toList();
 
-  List<String> get nomesDisciplinas {
-    return this._disciplinas.map((disciplina) {
-      return disciplina.nome;
-    }).toList();
-  }
-
   List<Disciplina> get disciplinas => this._disciplinas;
 }
