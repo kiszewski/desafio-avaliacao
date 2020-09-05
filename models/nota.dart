@@ -53,7 +53,10 @@ class Nota {
     if (validarNotaEUA(media)) {
       String notaSelecionada =
           letrasAmericanas.firstWhere((key) => key == media);
-      this._media = Nota._notasAmericanasValidas[notaSelecionada][1];
+
+      final double notaMinima = Nota._notasAmericanasValidas[notaSelecionada][0];
+      final double notaMaxima = Nota._notasAmericanasValidas[notaSelecionada][1];
+      this._media = (notaMinima + notaMaxima) / 2;
     }
 
     if ((this._notaProva1 != null) && (this._notaProva2 != null)) {

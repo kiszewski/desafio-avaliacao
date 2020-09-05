@@ -83,6 +83,9 @@ class ProcessarArquivo {
     const String PC_CURSOU = 'cursou';
     const String PC_CONCLUIU = 'concluiu';
     const String PC_SEMESTRE = 'semestre';
+    const String PC_QUAL_NOTA = 'qual a nota';
+    const String PC_NECESSARIA = 'preciso tirar em';
+    const String PC_PARA_PASSAR = 'para passar';
 
     String fraseResposta;
 
@@ -149,6 +152,47 @@ class ProcessarArquivo {
           fraseResposta = 'Conclui $qtdCreditos creditos';
         } catch (e) {
           fraseResposta = e.toString();
+        }
+      }
+
+      if (pergunta.startsWith(PC_QUAL_NOTA) &&
+          pergunta.contains(PC_NECESSARIA) &&
+          pergunta.contains(PC_PARA_PASSAR)) {
+        for (var disciplina in grade.disciplinasComNotas) {
+          if (pergunta.contains(disciplina.nome.toLowerCase())) {
+            final Nota nota = disciplina.obterNota;
+            String notaNecessaria = nota.notaNecessaria('C').toStringAsFixed(1);
+            fraseResposta =
+                'A nota em ${disciplina.nome} deve ser $notaNecessaria';
+          }
+        }
+      } else if (pergunta.startsWith(PC_QUAL_NOTA) &&
+          pergunta.contains(PC_PROVA1)) {
+        for (var disciplina in grade.disciplinasComNotas) {
+          if (pergunta.contains(disciplina.nome.toLowerCase())) {
+            try {
+              Nota nota = disciplina.obterNota;
+              String notaFaltante = nota.notaFaltante.toStringAsFixed(1);
+              fraseResposta =
+                  'A nota da Prova1 em ${disciplina.nome} foi $notaFaltante';
+            } catch (e) {
+              fraseResposta = e.toString();
+            }
+          }
+        }
+      } else if (pergunta.startsWith(PC_QUAL_NOTA) &&
+          pergunta.contains(PC_PROVA2)) {
+        for (var disciplina in grade.disciplinasComNotas) {
+          if (pergunta.contains(disciplina.nome.toLowerCase())) {
+            try {
+              Nota nota = disciplina.obterNota;
+              String notaFaltante = nota.notaFaltante.toStringAsFixed(1);
+              fraseResposta =
+                  'A nota da Prova2 em ${disciplina.nome} foi $notaFaltante';
+            } catch (e) {
+              fraseResposta = e.toString();
+            }
+          }
         }
       }
 

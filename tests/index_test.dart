@@ -49,7 +49,8 @@ main() {
 
       ProcessarArquivo resposta = ProcessarArquivo(frases);
 
-      expect(resposta.respostas[0], 'Nota americana inválida, letras permitidas: A, B, C, D e F.');
+      expect(resposta.respostas[0],
+          'Nota americana inválida, letras permitidas: A, B, C, D e F.');
     });
 
     test('Inserindo prova1 invalida', () {
@@ -62,7 +63,8 @@ main() {
 
       ProcessarArquivo resposta = ProcessarArquivo(frases);
 
-      expect(resposta.respostas[0], 'Nota americana inválida, letras permitidas: A, B, C, D e F.');
+      expect(resposta.respostas[0],
+          'Nota americana inválida, letras permitidas: A, B, C, D e F.');
     });
   });
 
@@ -97,15 +99,38 @@ main() {
     test('Respondendo se está aprovado em todas', () {
       expect(resposta.respostas[3], 'Não, reprovei em Teoria da computacao');
     });
-  
+
     test('Respondendo se está aprovado em disciplina especifica', () {
-      expect(resposta.respostas[4], 'Não, fui reprovado em Teoria da computacao com media 3.9');
-      expect(resposta.respostas[5], 'Sim, fui aprovado em Banco de Dados com media 8.9');
+      expect(resposta.respostas[4],
+          'Não, fui reprovado em Teoria da computacao com media 3.9');
+      expect(resposta.respostas[5],
+          'Sim, fui aprovado em Banco de Dados com media 8.0');
     });
-  
+
     test('Respondendo quantidade de creditos', () {
       expect(resposta.respostas[6], 'No semestre cursei 23 creditos');
       expect(resposta.respostas[7], 'Conclui 16 creditos');
+    });
+  });
+
+  group('Respostas 2', () {
+    final List<String> texto = [
+      'Teoria da computacao media B',
+      'Engenharia de Software Prova1 C',
+      'Logica matematica Prova1 D',
+      'Banco de dados Prova1 C',
+      'Banco de dados Prova2 B',
+      'Arquitetura de software media B',
+      'Arquitetura de software Prova1 C',
+      'qual a nota em pontuacao brasileira preciso tirar em Logica matematica para passar na disciplina?',
+      'qual a nota da Prova2 em Arquitetura de software?'
+    ];
+
+    ProcessarArquivo resposta = ProcessarArquivo(texto);
+
+    test('Nota para passar', () {
+      expect(resposta.respostas[0], 'A nota em Logica Matematica deve ser 5.1');
+      expect(resposta.respostas[1], 'A nota da Prova2 em Arquitetura de Software foi 9.0');
     });
   });
 }

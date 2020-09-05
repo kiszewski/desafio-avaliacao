@@ -17,7 +17,9 @@ main(List<String> args) {
     test('Media na disciplina', () {
       Disciplina engSoftware = Disciplina('Engenharia de Software', 3);
       engSoftware.definirNota(Nota.notaEUA(media: 'C'));
-      expect(engSoftware.mediaDisciplina, 6.9);   //Retornando sempre a nota mais alta possivel
+      //Quando for passado somente a media, sera atribuido o valor
+      // entre a nota nota mais alta e a nota mais baixa, C = 5-6.9
+      expect(engSoftware.mediaDisciplina.toStringAsFixed(1), '6.0');   
     });
   });
 }
