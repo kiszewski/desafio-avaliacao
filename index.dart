@@ -35,7 +35,7 @@ class ProcessarArquivo {
       for (var disciplina in this.gr.disciplinas) {
         try {
           if (frase.startsWith(disciplina.nome.toLowerCase())) {
-            String notaLetra = frase[frase.length - 1].toUpperCase();
+            final String notaLetra = frase[frase.length - 1].toUpperCase();
 
             if (frase.contains(PC_MEDIA)) {
               if (disciplina.temNota) {
@@ -45,6 +45,7 @@ class ProcessarArquivo {
                 disciplina.definirNota(Nota.notaEUA(media: notaLetra));
               }
             }
+
             if (frase.contains(PC_PROVA1)) {
               if (disciplina.temNota) {
                 Nota notaExistente = disciplina.obterNota;
@@ -53,6 +54,7 @@ class ProcessarArquivo {
                 disciplina.definirNota(Nota.notaEUA(nota1: notaLetra));
               }
             }
+
             if (frase.contains(PC_PROVA2)) {
               if (disciplina.temNota) {
                 Nota notaExistente = disciplina.obterNota;
@@ -113,6 +115,18 @@ class ProcessarArquivo {
             : 'Não, reprovei em ${gr.disciplinasReprovadas[0].nome}';
 
         this.respostas.add(resp);
+      } else if (pergunta.contains(PC_APROVADO)) {
+        // Se o aluno foi aprovado em uma disciplina especifica
+
+        for (var disciplina in gr.disciplinasComNotas) {
+          if(pergunta.contains(disciplina.nome)) {
+            String resp = disciplina.estaAprovado 
+            ? 'Sim, fui aprovado em ${disciplina.nome} com media ${disciplina.mediaDisciplina.toStringAsFixed(1)}'
+            : 'Não, fui reprovado em ${disciplina.nome} com media ${disciplina.mediaDisciplina.toStringAsFixed(1)}';
+
+            this.respostas.add(resp);
+          };
+        }
       }
     }
   }

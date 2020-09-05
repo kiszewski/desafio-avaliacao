@@ -77,7 +77,9 @@ main() {
       'qual a media em pontuacao brasileira em Teoria da computacao?',
       'qual a media em pontuacao brasileira em Arquitetura de Software?',
       'qual a media em pontuacao brasileira em Engenharia de Software?',
-      'voce foi aprovado em todas as disciplinas?'
+      'voce foi aprovado em todas as disciplinas?',
+      'voce foi aprovado em Teoria da computacao?',
+      'voce foi aprovado em Banco de Dados?',
     ];
 
     ProcessarArquivo resposta = ProcessarArquivo(texto);
@@ -92,6 +94,11 @@ main() {
 
     test('Respondendo se está aprovado em todas', () {
       expect(resposta.respostas[3], 'Não, reprovei em Teoria da computacao');
+    });
+  
+    test('Respondendo se está aprovado em disciplina especifica', () {
+      expect(resposta.respostas[4], 'Não, fui reprovado em Teoria da computacao com media 3.9');
+      expect(resposta.respostas[5], 'Sim, fui aprovado em Banco de Dados com media 8.9');
     });
   });
 }
