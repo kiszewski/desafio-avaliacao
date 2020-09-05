@@ -1,0 +1,14 @@
+Logica Matematica Media C
+Engenharia de Software Prova1 A
+Engenharia de Software Prova2 B
+Banco de Dados Media B
+Teoria da Computacao Prova1 F
+Teoria da Computacao Prova2 D
+
+
+qual a media em pontuacao brasileira de Logica Matematica?
+voce foi aprovado em Engenharia de Software ?
+qual a media da disciplina de Teoria da computacao?
+voce foi aprovado em todas as disciplinas?
+quantos creditos você cursou neste semestre?
+quantos creditos você concluiu?

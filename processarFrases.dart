@@ -2,7 +2,7 @@ import 'models/disciplina.dart';
 import 'models/gradeCurricular.dart';
 import 'models/nota.dart';
 
-class ProcessarArquivo {
+class ProcessarFrases {
   final GradeCurricular grade = GradeCurricular([
     Disciplina('Logica Matematica', 4),
     Disciplina('Engenharia de Software', 6),
@@ -10,26 +10,29 @@ class ProcessarArquivo {
     Disciplina('Banco de Dados', 6),
     Disciplina('Arquitetura de Software', 4),
   ]);
+  
   List<String> respostas = [];
 
-  ProcessarArquivo(List<String> txt) {
-    //Separar o que é pergunta e o que é frases
-    List<String> frases =
-        txt.where((element) => !element.endsWith('?')).toList();
-    List<String> perguntas =
-        txt.where((element) => element.endsWith('?')).toList();
+  ProcessarFrases(List<String> txt) {
+    if (txt.isNotEmpty) {
+      //Separar o que é pergunta e o que é frase
+      List<String> instrucoes =
+          txt.where((element) => !element.endsWith('?')).toList();
+      List<String> perguntas =
+          txt.where((element) => element.endsWith('?')).toList();
 
-    processarNotas(frases);
-    processarPerguntas(perguntas);
+      processarNotas(instrucoes);
+      processarPerguntas(perguntas);
+    }
   }
 
-  processarNotas(List<String> frases) {
+  processarNotas(List<String> instrucoes) {
     //Palavras Chaves ou PC:
     const String PC_MEDIA = 'media';
     const String PC_PROVA1 = 'prova1';
     const String PC_PROVA2 = 'prova2';
 
-    for (var frase in frases) {
+    for (var frase in instrucoes) {
       frase = frase.toLowerCase();
 
       for (var disciplina in this.grade.disciplinas) {
@@ -76,7 +79,6 @@ class ProcessarArquivo {
     const String PC_MEDIA = 'media';
     const String PC_PROVA1 = 'prova1';
     const String PC_PROVA2 = 'prova2';
-    const String PC_PONTUACAO_BRASILEIRA = 'pontuacao brasileira';
     const String PC_APROVADO = 'aprovado';
     const String PC_TODAS_DISCIPLINAS = 'todas as disciplinas';
     const String PC_CREDITOS = 'quantos creditos';
@@ -86,6 +88,7 @@ class ProcessarArquivo {
     const String PC_QUAL_NOTA = 'qual a nota';
     const String PC_NECESSARIA = 'preciso tirar em';
     const String PC_PARA_PASSAR = 'para passar';
+    const String PC_PARA_FICAR = 'para ficar com media';
 
     String fraseResposta;
 
@@ -196,7 +199,31 @@ class ProcessarArquivo {
         }
       }
 
-      this.respostas.add(fraseResposta);
+      if (pergunta.startsWith(PC_PARA_FICAR)) {
+        String provaDesejada =
+            pergunta.contains(PC_PROVA1) ? 'Prova1' : 'Prova2';
+
+        for (var disciplina in grade.disciplinas) {
+          if (pergunta.contains(disciplina.nome.toLowerCase())) {
+            try {
+              String notaDesejada = pergunta[21].toUpperCase();
+              Nota nota = disciplina.obterNota;
+              String notaNecessaria =
+                  nota.notaNecessaria(notaDesejada).toStringAsFixed(1);
+              fraseResposta =
+                  'A nota da $provaDesejada em ${disciplina.nome} deve ser $notaNecessaria';
+            } catch (e) {
+              fraseResposta = e.toString();
+            }
+          }
+        }
+      }
+      if (fraseResposta == null) {
+        this.respostas.add('Nem ideia do que isso significa');
+      } else {
+        this.respostas.add(fraseResposta);
+      }
+      fraseResposta = null;
     }
   }
 }

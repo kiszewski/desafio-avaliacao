@@ -54,8 +54,10 @@ class Nota {
       String notaSelecionada =
           letrasAmericanas.firstWhere((key) => key == media);
 
-      final double notaMinima = Nota._notasAmericanasValidas[notaSelecionada][0];
-      final double notaMaxima = Nota._notasAmericanasValidas[notaSelecionada][1];
+      final double notaMinima =
+          Nota._notasAmericanasValidas[notaSelecionada][0];
+      final double notaMaxima =
+          Nota._notasAmericanasValidas[notaSelecionada][1];
       this._media = (notaMinima + notaMaxima) / 2;
     }
 
@@ -155,14 +157,27 @@ class Nota {
 
   double notaNecessaria(String notaDesejada) {
     if (validarNotaEUA(notaDesejada)) {
-      final double mediaDesejada = Nota._notasAmericanasValidas[notaDesejada][0];
+      final double mediaDesejada =
+          Nota._notasAmericanasValidas[notaDesejada][0];
+      double notaNecessaria;
+
       if (this._notaProva1 != null) {
-        return (mediaDesejada * 2) - this._notaProva1;
+        notaNecessaria = (mediaDesejada * 2) - this._notaProva1;
+        if (notaNecessaria > 10) {
+          throw NotaInvalidaException(
+              'Não é possível alcançar a media desejada com a nota anterior');
+        }
       } else if (this._notaProva2 != null) {
-        return (mediaDesejada * 2) - this._notaProva2;
+        notaNecessaria = (mediaDesejada * 2) - this._notaProva2;
+        if (notaNecessaria > 10) {
+          throw NotaInvalidaException(
+              'Não é possível alcançar a media desejada com a nota anterior');
+        }
       } else {
         throw NotaInvalidaException('Sem nota para calcular nota necessária.');
       }
+
+      return notaNecessaria;
     } else {
       throw NotaInvalidaException('Nota inválida.');
     }

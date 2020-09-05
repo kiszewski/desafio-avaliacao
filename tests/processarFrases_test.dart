@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import '../index.dart';
+import '../processarFrases.dart';
 
 main() {
   group('Inserção de dados', () {
@@ -14,8 +14,8 @@ main() {
         'Banco de Dados prova2 C',
       ];
 
-      ProcessarArquivo resposta = ProcessarArquivo(frases);
-      ProcessarArquivo resposta2 = ProcessarArquivo(frases2);
+      ProcessarFrases resposta = ProcessarFrases(frases);
+      ProcessarFrases resposta2 = ProcessarFrases(frases2);
 
       expect(resposta.grade.disciplinasComNotas.length, 1);
       expect(resposta.grade.aprovadoEmTodas, false);
@@ -33,7 +33,7 @@ main() {
         'Teoria da computacao prova1 F',
         'Teoria da computacao prova2 D',
       ];
-      ProcessarArquivo resposta = ProcessarArquivo(frases);
+      ProcessarFrases resposta = ProcessarFrases(frases);
 
       expect(resposta.grade.aprovadoEmTodas, false);
       expect(resposta.grade.qtdCreditosConcluidos, 16);
@@ -47,7 +47,7 @@ main() {
         'Teoria da computacao prova2 D',
       ];
 
-      ProcessarArquivo resposta = ProcessarArquivo(frases);
+      ProcessarFrases resposta = ProcessarFrases(frases);
 
       expect(resposta.respostas[0],
           'Nota americana inválida, letras permitidas: A, B, C, D e F.');
@@ -61,7 +61,7 @@ main() {
         'Teoria da computacao prova2 D',
       ];
 
-      ProcessarArquivo resposta = ProcessarArquivo(frases);
+      ProcessarFrases resposta = ProcessarFrases(frases);
 
       expect(resposta.respostas[0],
           'Nota americana inválida, letras permitidas: A, B, C, D e F.');
@@ -86,7 +86,7 @@ main() {
       'quantos creditos você concluiu?',
     ];
 
-    ProcessarArquivo resposta = ProcessarArquivo(texto);
+    ProcessarFrases resposta = ProcessarFrases(texto);
 
     test('Respondendo media', () {
       expect(
@@ -123,14 +123,16 @@ main() {
       'Arquitetura de software media B',
       'Arquitetura de software Prova1 C',
       'qual a nota em pontuacao brasileira preciso tirar em Logica matematica para passar na disciplina?',
-      'qual a nota da Prova2 em Arquitetura de software?'
+      'qual a nota da Prova2 em Arquitetura de software?',
+      'para ficar com media B em Engenharia de software qual deve ser a nota da Prova2?'
     ];
 
-    ProcessarArquivo resposta = ProcessarArquivo(texto);
+    ProcessarFrases resposta = ProcessarFrases(texto);
 
     test('Nota para passar', () {
       expect(resposta.respostas[0], 'A nota em Logica Matematica deve ser 5.1');
       expect(resposta.respostas[1], 'A nota da Prova2 em Arquitetura de Software foi 9.0');
+      // expect(resposta.respostas[2], 'A nota da Prova2 em Engenharia de Software deve ser 9.4');
     });
   });
 }

@@ -75,6 +75,15 @@ main() {
       }
     });
 
+    test('Obter media desejada error', () {
+      try {
+        Nota nota = Nota(nota1: 0.5);
+        nota.notaNecessaria('A');
+      } catch (e) {
+        expect(e, isA<NotaInvalidaException>());
+      }
+    });
+
     test('Instanciar nota error', () {
       try {
         Nota nota = Nota(media: -2);
