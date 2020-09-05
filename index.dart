@@ -3,7 +3,7 @@ import 'models/gradeCurricular.dart';
 import 'models/nota.dart';
 
 class ProcessarArquivo {
-  final GradeCurricular gr = GradeCurricular([
+  final GradeCurricular grade = GradeCurricular([
     Disciplina('Logica Matematica', 4),
     Disciplina('Engenharia de Software', 6),
     Disciplina('Teoria da computacao', 3),
@@ -32,7 +32,7 @@ class ProcessarArquivo {
     for (var frase in frases) {
       frase = frase.toLowerCase();
 
-      for (var disciplina in this.gr.disciplinas) {
+      for (var disciplina in this.grade.disciplinas) {
         try {
           if (frase.startsWith(disciplina.nome.toLowerCase())) {
             final String notaLetra = frase[frase.length - 1].toUpperCase();
@@ -77,29 +77,29 @@ class ProcessarArquivo {
     const String PC_PROVA1 = 'prova1';
     const String PC_PROVA2 = 'prova2';
     const String PC_PONTUACAO_BRASILEIRA = 'pontuacao brasileira';
-    const String PC_MATERIA = '';
     const String PC_APROVADO = 'aprovado';
     const String PC_TODAS_DISCIPLINAS = 'todas as disciplinas';
-    const String PC_CREDITOS = 'creditos';
+    const String PC_CREDITOS = 'quantos creditos';
     const String PC_CURSOU = 'cursou';
     const String PC_CONCLUIU = 'concluiu';
+    const String PC_SEMESTRE = 'semestre';
+
+    String fraseResposta;
 
     for (var pergunta in perguntas) {
-      if (pergunta.contains(PC_MEDIA)) {
-        for (var disciplina in this.gr.disciplinas) {
-          if (pergunta.endsWith('${disciplina.nome}?')) {
-            //Qual a media dessa disciplina:
-            String resp;
+      pergunta = pergunta.toLowerCase();
 
+      if (pergunta.contains(PC_MEDIA)) {
+        for (var disciplina in this.grade.disciplinas) {
+          if (pergunta.endsWith('${disciplina.nome.toLowerCase()}?')) {
+            //Qual a media dessa disciplina:
             try {
               double media = disciplina.mediaDisciplina;
-              resp =
+              fraseResposta =
                   'A media em ${disciplina.nome} foi de ${media.toStringAsFixed(1)}';
             } catch (e) {
-              resp = e.toString();
+              fraseResposta = e.toString();
             }
-
-            this.respostas.add(resp);
           }
         }
       }
@@ -109,25 +109,50 @@ class ProcessarArquivo {
         // Se o aluno foi aprovado em todas as disciplinas
         // Esse metodo considera somente as disciplinas com notas
         // Se o aluno for reprovado em mais de uma prova só sera exibido uma das notas que ele rodou
-
-        String resp = gr.aprovadoEmTodas
-            ? 'Sim, fui aprovado em todas disciplinas'
-            : 'Não, reprovei em ${gr.disciplinasReprovadas[0].nome}';
-
-        this.respostas.add(resp);
+        try {
+          fraseResposta = grade.aprovadoEmTodas
+              ? 'Sim, fui aprovado em todas disciplinas'
+              : 'Não, reprovei em ${grade.disciplinasReprovadas[0].nome}';
+        } catch (e) {
+          fraseResposta = e.toString();
+        }
       } else if (pergunta.contains(PC_APROVADO)) {
         // Se o aluno foi aprovado em uma disciplina especifica
-
-        for (var disciplina in gr.disciplinasComNotas) {
-          if(pergunta.contains(disciplina.nome)) {
-            String resp = disciplina.estaAprovado 
-            ? 'Sim, fui aprovado em ${disciplina.nome} com media ${disciplina.mediaDisciplina.toStringAsFixed(1)}'
-            : 'Não, fui reprovado em ${disciplina.nome} com media ${disciplina.mediaDisciplina.toStringAsFixed(1)}';
-
-            this.respostas.add(resp);
-          };
+        for (var disciplina in grade.disciplinasComNotas) {
+          if (pergunta.contains(disciplina.nome.toLowerCase())) {
+            try {
+              fraseResposta = disciplina.estaAprovado
+                  ? 'Sim, fui aprovado em ${disciplina.nome} com media ${disciplina.mediaDisciplina.toStringAsFixed(1)}'
+                  : 'Não, fui reprovado em ${disciplina.nome} com media ${disciplina.mediaDisciplina.toStringAsFixed(1)}';
+            } catch (e) {
+              fraseResposta = e.toString();
+            }
+          }
         }
       }
+
+      if (pergunta.startsWith(PC_CREDITOS) &&
+          pergunta.contains(PC_CURSOU) &&
+          pergunta.contains(PC_SEMESTRE)) {
+        // Quantos creditos o aluno cursou no semestre
+        try {
+          String qtdCreditos = grade.qtdTotalCreditos.toString();
+          fraseResposta = 'No semestre cursei $qtdCreditos creditos';
+        } catch (e) {
+          fraseResposta = e.toString();
+        }
+      } else if (pergunta.startsWith(PC_CREDITOS) &&
+          pergunta.contains(PC_CONCLUIU)) {
+        // Quantos creditos o aluno foi aprovado no semestre
+        try {
+          String qtdCreditos = grade.qtdCreditosConcluidos.toString();
+          fraseResposta = 'Conclui $qtdCreditos creditos';
+        } catch (e) {
+          fraseResposta = e.toString();
+        }
+      }
+
+      this.respostas.add(fraseResposta);
     }
   }
 }

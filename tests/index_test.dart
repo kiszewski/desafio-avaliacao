@@ -17,11 +17,11 @@ main() {
       ProcessarArquivo resposta = ProcessarArquivo(frases);
       ProcessarArquivo resposta2 = ProcessarArquivo(frases2);
 
-      expect(resposta.gr.disciplinasComNotas.length, 1);
-      expect(resposta.gr.aprovadoEmTodas, false);
+      expect(resposta.grade.disciplinasComNotas.length, 1);
+      expect(resposta.grade.aprovadoEmTodas, false);
 
-      expect(resposta2.gr.disciplinasComNotas.length, 1);
-      expect(resposta2.gr.aprovadoEmTodas, true);
+      expect(resposta2.grade.disciplinasComNotas.length, 1);
+      expect(resposta2.grade.aprovadoEmTodas, true);
     });
 
     test('Inserir dados atraves das frases', () {
@@ -35,8 +35,8 @@ main() {
       ];
       ProcessarArquivo resposta = ProcessarArquivo(frases);
 
-      expect(resposta.gr.aprovadoEmTodas, false);
-      expect(resposta.gr.qtdCreditosConcluidos, 16);
+      expect(resposta.grade.aprovadoEmTodas, false);
+      expect(resposta.grade.qtdCreditosConcluidos, 16);
     });
 
     test('Inserindo media invalida', () {
@@ -80,6 +80,8 @@ main() {
       'voce foi aprovado em todas as disciplinas?',
       'voce foi aprovado em Teoria da computacao?',
       'voce foi aprovado em Banco de Dados?',
+      'quantos creditos você cursou neste semestre?',
+      'quantos creditos você concluiu?',
     ];
 
     ProcessarArquivo resposta = ProcessarArquivo(texto);
@@ -99,6 +101,11 @@ main() {
     test('Respondendo se está aprovado em disciplina especifica', () {
       expect(resposta.respostas[4], 'Não, fui reprovado em Teoria da computacao com media 3.9');
       expect(resposta.respostas[5], 'Sim, fui aprovado em Banco de Dados com media 8.9');
+    });
+  
+    test('Respondendo quantidade de creditos', () {
+      expect(resposta.respostas[6], 'No semestre cursei 23 creditos');
+      expect(resposta.respostas[7], 'Conclui 16 creditos');
     });
   });
 }
