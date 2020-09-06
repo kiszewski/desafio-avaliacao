@@ -132,7 +132,6 @@ main() {
     test('Nota para passar', () {
       expect(resposta.respostas[0], 'A nota em Logica Matematica deve ser 5.1');
       expect(resposta.respostas[1], 'A nota da Prova2 em Arquitetura de Software foi 9.0');
-      // expect(resposta.respostas[2], 'A nota da Prova2 em Engenharia de Software deve ser 9.4');
     });
   });
 }

@@ -1,5 +1,4 @@
 import 'disciplina.dart';
-import '../errors/gradeException.dart';
 
 class GradeCurricular {
   List<Disciplina> _disciplinas;

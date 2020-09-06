@@ -10,7 +10,7 @@ class ProcessarFrases {
     Disciplina('Banco de Dados', 6),
     Disciplina('Arquitetura de Software', 4),
   ]);
-  
+
   List<String> respostas = [];
 
   ProcessarFrases(List<String> txt) {
@@ -74,6 +74,140 @@ class ProcessarFrases {
     }
   }
 
+  String qualMedia(String pergunta) {
+    String resposta;
+
+    for (var disciplina in this.grade.disciplinas) {
+      if (pergunta.endsWith('${disciplina.nome.toLowerCase()}?')) {
+        try {
+          double media = disciplina.mediaDisciplina;
+          resposta =
+              'A media em ${disciplina.nome} foi de ${media.toStringAsFixed(1)}';
+        } catch (e) {
+          resposta = e.toString();
+        } finally {
+          return resposta;
+        }
+      }
+    }
+  }
+
+  String aprovadoEmTodasDisciplinas(String pergunta) {
+    String resposta;
+    // Se o aluno foi aprovado em todas as disciplinas
+    // Esse metodo considera somente as disciplinas com notas
+    // Se o aluno for reprovado em mais de uma prova só sera exibido uma das notas que ele rodou
+    try {
+      resposta = grade.aprovadoEmTodas
+          ? 'Sim, fui aprovado em todas disciplinas'
+          : 'Não, reprovei em ${grade.disciplinasReprovadas[0].nome}';
+    } catch (e) {
+      resposta = e.toString();
+    } finally {
+      return resposta;
+    }
+  }
+
+  String aprovadoNaDisciplina(String pergunta) {
+    // Se o aluno foi aprovado em uma disciplina especifica
+    String resposta;
+    for (var disciplina in grade.disciplinasComNotas) {
+      if (pergunta.contains(disciplina.nome.toLowerCase())) {
+        try {
+          resposta = disciplina.estaAprovado
+              ? 'Sim, fui aprovado em ${disciplina.nome} com media ${disciplina.mediaDisciplina.toStringAsFixed(1)}'
+              : 'Não, fui reprovado em ${disciplina.nome} com media ${disciplina.mediaDisciplina.toStringAsFixed(1)}';
+        } catch (e) {
+          resposta = e.toString();
+        } finally {
+          return resposta;
+        }
+      }
+    }
+  }
+
+  String quantosCreditosCursados(String pergunta) {
+    // Quantos creditos o aluno cursou no semestre
+    String resposta;
+    try {
+      String qtdCreditos = grade.qtdTotalCreditos.toString();
+      resposta = 'No semestre cursei $qtdCreditos creditos';
+    } catch (e) {
+      resposta = e.toString();
+    } finally {
+      return resposta;
+    }
+  }
+
+  String quantosCreditosAprovados(String pergunta) {
+    // Quantos creditos o aluno foi aprovado no semestre
+    String resposta;
+    try {
+      String qtdCreditos = grade.qtdCreditosConcluidos.toString();
+      resposta = 'Conclui $qtdCreditos creditos';
+    } catch (e) {
+      resposta = e.toString();
+    } finally {
+      return resposta;
+    }
+  }
+
+  String qualNotaNecessariaParaPassar(String pergunta) {
+    String resposta;
+    for (var disciplina in grade.disciplinasComNotas) {
+      if (pergunta.contains(disciplina.nome.toLowerCase())) {
+        try {
+          final Nota nota = disciplina.obterNota;
+          String notaNecessaria = nota.notaNecessaria('C').toStringAsFixed(1);
+          resposta = 'A nota em ${disciplina.nome} deve ser $notaNecessaria';
+        } catch (e) {
+          resposta = e.toString();
+        } finally {
+          return resposta;
+        }
+      }
+    }
+  }
+
+  String qualNotaProva(String pergunta, String prova) {
+    String resposta;
+    for (var disciplina in grade.disciplinasComNotas) {
+      if (pergunta.contains(disciplina.nome.toLowerCase())) {
+        try {
+          Nota nota = disciplina.obterNota;
+          String notaFaltante = nota.notaFaltante.toStringAsFixed(1);
+          resposta = 'A nota da $prova em ${disciplina.nome} foi $notaFaltante';
+        } catch (e) {
+          resposta = e.toString();
+        } finally {
+          return resposta;
+        }
+      }
+    }
+  }
+
+  String qualNotaNecessaria(String pergunta) {
+    String resposta;
+    String provaDesejada = pergunta.contains('prova1') ? 'Prova1' : 'Prova2';
+
+    for (var disciplina in grade.disciplinas) {
+      if (pergunta.contains(disciplina.nome.toLowerCase())) {
+        try {
+          String notaDesejada = pergunta[21].toUpperCase();
+          Nota nota = disciplina.obterNota;
+          String notaNecessaria =
+              nota.notaNecessaria(notaDesejada).toStringAsFixed(1);
+          resposta =
+              'A nota da $provaDesejada em ${disciplina.nome} deve ser $notaNecessaria';
+        } catch (e) {
+          resposta = e.toString();
+        } finally {
+          return resposta;
+        }
+      }
+    }
+  }
+
   processarPerguntas(List<String> perguntas) {
     //Palavras Chaves ou PC:
     const String PC_MEDIA = 'media';
@@ -96,128 +230,41 @@ class ProcessarFrases {
       pergunta = pergunta.toLowerCase();
 
       if (pergunta.contains(PC_MEDIA)) {
-        for (var disciplina in this.grade.disciplinas) {
-          if (pergunta.endsWith('${disciplina.nome.toLowerCase()}?')) {
-            //Qual a media dessa disciplina:
-            try {
-              double media = disciplina.mediaDisciplina;
-              fraseResposta =
-                  'A media em ${disciplina.nome} foi de ${media.toStringAsFixed(1)}';
-            } catch (e) {
-              fraseResposta = e.toString();
-            }
-          }
-        }
+        fraseResposta = qualMedia(pergunta);
       }
 
       if (pergunta.contains(PC_APROVADO) &&
           pergunta.contains(PC_TODAS_DISCIPLINAS)) {
-        // Se o aluno foi aprovado em todas as disciplinas
-        // Esse metodo considera somente as disciplinas com notas
-        // Se o aluno for reprovado em mais de uma prova só sera exibido uma das notas que ele rodou
-        try {
-          fraseResposta = grade.aprovadoEmTodas
-              ? 'Sim, fui aprovado em todas disciplinas'
-              : 'Não, reprovei em ${grade.disciplinasReprovadas[0].nome}';
-        } catch (e) {
-          fraseResposta = e.toString();
-        }
+        fraseResposta = aprovadoEmTodasDisciplinas(pergunta);
       } else if (pergunta.contains(PC_APROVADO)) {
-        // Se o aluno foi aprovado em uma disciplina especifica
-        for (var disciplina in grade.disciplinasComNotas) {
-          if (pergunta.contains(disciplina.nome.toLowerCase())) {
-            try {
-              fraseResposta = disciplina.estaAprovado
-                  ? 'Sim, fui aprovado em ${disciplina.nome} com media ${disciplina.mediaDisciplina.toStringAsFixed(1)}'
-                  : 'Não, fui reprovado em ${disciplina.nome} com media ${disciplina.mediaDisciplina.toStringAsFixed(1)}';
-            } catch (e) {
-              fraseResposta = e.toString();
-            }
-          }
-        }
+        fraseResposta = aprovadoNaDisciplina(pergunta);
       }
 
       if (pergunta.startsWith(PC_CREDITOS) &&
           pergunta.contains(PC_CURSOU) &&
           pergunta.contains(PC_SEMESTRE)) {
-        // Quantos creditos o aluno cursou no semestre
-        try {
-          String qtdCreditos = grade.qtdTotalCreditos.toString();
-          fraseResposta = 'No semestre cursei $qtdCreditos creditos';
-        } catch (e) {
-          fraseResposta = e.toString();
-        }
+        fraseResposta = quantosCreditosCursados(pergunta);
       } else if (pergunta.startsWith(PC_CREDITOS) &&
           pergunta.contains(PC_CONCLUIU)) {
-        // Quantos creditos o aluno foi aprovado no semestre
-        try {
-          String qtdCreditos = grade.qtdCreditosConcluidos.toString();
-          fraseResposta = 'Conclui $qtdCreditos creditos';
-        } catch (e) {
-          fraseResposta = e.toString();
-        }
+        fraseResposta = quantosCreditosAprovados(pergunta);
       }
 
       if (pergunta.startsWith(PC_QUAL_NOTA) &&
           pergunta.contains(PC_NECESSARIA) &&
           pergunta.contains(PC_PARA_PASSAR)) {
-        for (var disciplina in grade.disciplinasComNotas) {
-          if (pergunta.contains(disciplina.nome.toLowerCase())) {
-            final Nota nota = disciplina.obterNota;
-            String notaNecessaria = nota.notaNecessaria('C').toStringAsFixed(1);
-            fraseResposta =
-                'A nota em ${disciplina.nome} deve ser $notaNecessaria';
-          }
-        }
+        fraseResposta = qualNotaNecessariaParaPassar(pergunta);
       } else if (pergunta.startsWith(PC_QUAL_NOTA) &&
           pergunta.contains(PC_PROVA1)) {
-        for (var disciplina in grade.disciplinasComNotas) {
-          if (pergunta.contains(disciplina.nome.toLowerCase())) {
-            try {
-              Nota nota = disciplina.obterNota;
-              String notaFaltante = nota.notaFaltante.toStringAsFixed(1);
-              fraseResposta =
-                  'A nota da Prova1 em ${disciplina.nome} foi $notaFaltante';
-            } catch (e) {
-              fraseResposta = e.toString();
-            }
-          }
-        }
+        fraseResposta = qualNotaProva(pergunta, 'Prova1');
       } else if (pergunta.startsWith(PC_QUAL_NOTA) &&
           pergunta.contains(PC_PROVA2)) {
-        for (var disciplina in grade.disciplinasComNotas) {
-          if (pergunta.contains(disciplina.nome.toLowerCase())) {
-            try {
-              Nota nota = disciplina.obterNota;
-              String notaFaltante = nota.notaFaltante.toStringAsFixed(1);
-              fraseResposta =
-                  'A nota da Prova2 em ${disciplina.nome} foi $notaFaltante';
-            } catch (e) {
-              fraseResposta = e.toString();
-            }
-          }
-        }
+        fraseResposta = qualNotaProva(pergunta, 'Prova2');
       }
 
       if (pergunta.startsWith(PC_PARA_FICAR)) {
-        String provaDesejada =
-            pergunta.contains(PC_PROVA1) ? 'Prova1' : 'Prova2';
-
-        for (var disciplina in grade.disciplinas) {
-          if (pergunta.contains(disciplina.nome.toLowerCase())) {
-            try {
-              String notaDesejada = pergunta[21].toUpperCase();
-              Nota nota = disciplina.obterNota;
-              String notaNecessaria =
-                  nota.notaNecessaria(notaDesejada).toStringAsFixed(1);
-              fraseResposta =
-                  'A nota da $provaDesejada em ${disciplina.nome} deve ser $notaNecessaria';
-            } catch (e) {
-              fraseResposta = e.toString();
-            }
-          }
-        }
+        fraseResposta = qualNotaNecessaria(pergunta);
       }
+
       if (fraseResposta == null) {
         this.respostas.add('Nem ideia do que isso significa');
       } else {

@@ -23,9 +23,9 @@ main() {
   final entrada6 = File('entradas/arquivo6.txt'); //Test com notas invalidas ou medias impossiveis
 
   // lerArquivos(entrada1);
-  // lerArquivos(entrada2);
+  lerArquivos(entrada2);
   // lerArquivos(entrada3);
   // lerArquivos(entrada4);
   // lerArquivos(entrada5);
-  lerArquivos(entrada6);
+  // lerArquivos(entrada6);
 }
