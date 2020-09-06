@@ -21,11 +21,13 @@ main() {
   final entrada4 = File('entradas/arquivo4.txt'); //Test arquivo com dados insuficientes
   final entrada5 = File('entradas/arquivo5.txt'); //Test com notas F
   final entrada6 = File('entradas/arquivo6.txt'); //Test com notas invalidas ou medias impossiveis
+  final entrada7 = File('entradas/arquivo7.txt'); //Test normal
 
   // lerArquivos(entrada1);
-  lerArquivos(entrada2);
+  // lerArquivos(entrada2);
   // lerArquivos(entrada3);
   // lerArquivos(entrada4);
   // lerArquivos(entrada5);
   // lerArquivos(entrada6);
+  lerArquivos(entrada7);
 }

@@ -1,0 +1,13 @@
+Logica matematica Prova1 A
+Logica matematica Prova2 C
+Banco de dados media C
+Engenharia de Software Prova1 B
+Engenharia de Software Prova2 D
+Arquitetura de Software media B
+Arquitetura de Software Prova1 A
+
+para ficar com media B em Logica matematica qual deve ser a nota da Prova2?
+voce foi aprovado em todas as disciplinas?
+qual a media em Engenharia de Software?
+quantos creditos voce concluiu?
+qual a nota da Prova2 em Arquitetura de Software?

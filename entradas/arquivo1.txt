@@ -4,8 +4,6 @@ Engenharia de Software Prova2 B
 Banco de Dados Media B
 Teoria da Computacao Prova1 F
 Teoria da Computacao Prova2 D
-
-
 qual a media em pontuacao brasileira de Logica Matematica?
 voce foi aprovado em Engenharia de Software ?
 qual a media da disciplina de Teoria da computacao?

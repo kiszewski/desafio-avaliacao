@@ -265,11 +265,10 @@ class ProcessarFrases {
         fraseResposta = qualNotaNecessaria(pergunta);
       }
 
-      if (fraseResposta == null) {
-        this.respostas.add('Nem ideia do que isso significa');
-      } else {
+      fraseResposta == null ?
+        this.respostas.add('Nem ideia do que isso significa') :
         this.respostas.add(fraseResposta);
-      }
+        
       fraseResposta = null;
     }
   }
