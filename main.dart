@@ -28,6 +28,6 @@ main() {
   // lerArquivos(entrada3);
   // lerArquivos(entrada4);
   // lerArquivos(entrada5);
-  // lerArquivos(entrada6);
-  lerArquivos(entrada7);
+  lerArquivos(entrada6);
+  // lerArquivos(entrada7);
 }

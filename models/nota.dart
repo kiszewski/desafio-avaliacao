@@ -138,7 +138,7 @@ class Nota {
 
       return notaProva2 > 10
           ? throw NotaInvalidaException(
-              'Média incopampatível com a nota passada.')
+              'Média incompativel com a nota passada.')
           : notaProva2;
     }
 
@@ -147,7 +147,7 @@ class Nota {
 
       return notaProva1 > 10
           ? throw NotaInvalidaException(
-              'Média incopampatível com a nota passada.')
+              'Média incompativel com a nota passada.')
           : notaProva1;
     }
   }
