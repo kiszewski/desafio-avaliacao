@@ -1,12 +1,14 @@
 -Inicio:
     O desafio inicia na leitura do arquivo txt com as linhas de instruções e perguntas;
+    Alguns resultados ficaram difrentes dos exemplos passados no email, a seguir sera explicado a lógica
+    usada em cada metodo para responder as perguntas, e o porque algumas respostas ficaram diferentes.
 
 -Processando as entradas e gerando a saída:
-    A classe ProcessarArquivo é responsável por processar esse arquivo, separando o que é instrução 
+    A classe ProcessarArquivo é responsável por processar os dados desse arquivo, separando o que é instrução 
 de pergunta pelo ultimo caractere que é um '?'.
     Nela há uma gradeCurricular que é onde fica toda a regra de negócio (será explicada mais a frente).
     A classe ProcessarArquivo primeiro processa as instruções que estão no arquivo txt atraves do metodo processarNotas, 
-preenchendo as notas passados na gradeCurricular nas respectivas disciplinas.
+preenchendo as notas passadas na gradeCurricular nas respectivas disciplinas.
     O metodo processarPerguntas identifica qual o tipo de pergunta é atraves das palavras chaves (constantes iniciadas com PC_),
 dessa forma ele consegue identificar qual metodo sera capaz de responder determinada pergunta, esse metodo tem a responsabilidade 
 de montar a frase inteira da resposta.
@@ -34,7 +36,7 @@ tenha somente uma das notas, ou só a media.
 esse construtor verifica se é uma nota da prova é valida e sempre atribui a nota mais alta possivel, exemplo:
     - se o aluno tirou nota 'A' a nota brasileira dele vai ser 10.
     Porem a nota da média sofre um calculo diferente, para diminuir a chance de erros e ficar mais proximo aos exemplos passados
-    no desafio, quando é passado uma nota A pra media ela pega o valor entre 9-10.
+    no desafio, quando é passado uma nota A pra media ela pega o valor entre 9-10, no caso algo em torno de 9.5.
     Existem mais alguns metodos como obter a media brasileira ou americana, mas o metodo com maior lógica é o 
 responsavel por responder qual a nota que esta faltando pro aluno por exemplo:
     -se o aluno tirou 2 na prova1 e a media dele for 9, 
