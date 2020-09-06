@@ -29,5 +29,5 @@ main() {
   // lerArquivos(entrada4);
   // lerArquivos(entrada5);
   // lerArquivos(entrada6);
-  // lerArquivos(entrada7);
+  lerArquivos(entrada7);
 }
