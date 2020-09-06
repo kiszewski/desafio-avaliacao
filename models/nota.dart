@@ -13,15 +13,15 @@ class Nota {
   };
 
   Nota({double nota1, double nota2, double media}) {
-    if (validarNota(nota1)) {
+    if (_validarNota(nota1)) {
       this._notaProva1 = nota1;
     }
 
-    if (validarNota(nota2)) {
+    if (_validarNota(nota2)) {
       this._notaProva2 = nota2;
     }
 
-    if (validarNota(media)) {
+    if (_validarNota(media)) {
       this._media = media;
     }
 
@@ -31,28 +31,28 @@ class Nota {
   }
 
   Nota.notaEUA({String nota1, String nota2, String media}) {
-    definirNotaEUA(nota1: nota1, nota2: nota2, media: media);
+    _definirNotaEUA(nota1: nota1, nota2: nota2, media: media);
   }
 
-  definirNotaEUA({String nota1, String nota2, String media}) {
+  _definirNotaEUA({String nota1, String nota2, String media}) {
     //Esse metódo pega a nota mais alta. Ex:
     //Se o aluno tirou A, a nota brasileira dele vai ser 10
 
-    if (validarNotaEUA(nota1)) {
+    if (_validarNotaEUA(nota1)) {
       String notaSelecionada =
-          letrasAmericanas.firstWhere((key) => key == nota1);
+          _letrasAmericanas.firstWhere((key) => key == nota1);
       this._notaProva1 = Nota._notasAmericanasValidas[notaSelecionada][1];
     }
 
-    if (validarNotaEUA(nota2)) {
+    if (_validarNotaEUA(nota2)) {
       String notaSelecionada =
-          letrasAmericanas.firstWhere((key) => key == nota2);
+          _letrasAmericanas.firstWhere((key) => key == nota2);
       this._notaProva2 = Nota._notasAmericanasValidas[notaSelecionada][1];
     }
 
-    if (validarNotaEUA(media)) {
+    if (_validarNotaEUA(media)) {
       String notaSelecionada =
-          letrasAmericanas.firstWhere((key) => key == media);
+          _letrasAmericanas.firstWhere((key) => key == media);
 
       final double notaMinima =
           Nota._notasAmericanasValidas[notaSelecionada][0];
@@ -66,7 +66,7 @@ class Nota {
     }
   }
 
-  bool validarNota(double nota) {
+  bool _validarNota(double nota) {
     if (nota != null) {
       if (nota > 10) {
         throw NotaInvalidaException('Nota acima do limite.');
@@ -78,14 +78,14 @@ class Nota {
     return false;
   }
 
-  bool validarNotaEUA(String nota) {
+  bool _validarNotaEUA(String nota) {
     if (nota != null) {
       if (nota.length > 1) {
         throw NotaInvalidaException(
             'Nota americana inválida, permitido somente uma letra.');
       }
 
-      if (letrasAmericanas.any((letra) => nota == letra)) {
+      if (_letrasAmericanas.any((letra) => nota == letra)) {
         return true;
       } else {
         throw NotaInvalidaException(
@@ -152,11 +152,11 @@ class Nota {
     }
   }
 
-  List<String> get letrasAmericanas =>
+  List<String> get _letrasAmericanas =>
       Nota._notasAmericanasValidas.keys.toList();
 
   double notaNecessaria(String notaDesejada) {
-    if (validarNotaEUA(notaDesejada)) {
+    if (_validarNotaEUA(notaDesejada)) {
       final double mediaDesejada =
           Nota._notasAmericanasValidas[notaDesejada][0];
       double notaNecessaria;
@@ -183,7 +183,7 @@ class Nota {
     }
   }
 
-  inserirNota1(String nota) => definirNotaEUA(nota1: nota);
-  inserirNota2(String nota) => definirNotaEUA(nota2: nota);
-  inserirMedia(String nota) => definirNotaEUA(media: nota);
+  inserirNota1(String nota) => _definirNotaEUA(nota1: nota);
+  inserirNota2(String nota) => _definirNotaEUA(nota2: nota);
+  inserirMedia(String nota) => _definirNotaEUA(media: nota);
 }
